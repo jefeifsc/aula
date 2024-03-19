@@ -122,6 +122,3 @@ Removendo tag e removendo do repositório remoto
 git tag -d checkpoint
 git push origin :refs/tags/checkpoint
 
-
-
-
