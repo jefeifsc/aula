@@ -1,0 +1,127 @@
+COMANDOS GIT:
+
+Configurar: 
+git config --global user.email "seumeail@outlook.com";
+git config --global user.name "seu nominho corno";
+git config --global user.password "<<senha>>";
+git config --list: visualizar as configurações;
+
+git init: inicia o repositório;
+git status: mostra se tem alterações para fazer;
+git add . : adiciona arquivos ao repositório;
+git commit -m <<mensagem>>: commit com a mensagem;
+git commit -m <<mensagem>> --amend: remenda o commit anterior, geralmente coloca-se a mesma mensagem, usar somente em últimos casos
+(O commit anterior é sobrescrito);
+
+touch .gitignore: criar arquivo que ignora arquivos;
+touch: cria arquivo;
+
+echo "<<nome arquivo>>" >> .gitignore: define o arquivo que será ignorado;
+
+echo: escreve algo dentro de um arquivo;
+>: sobrescreve;
+>>: adiciona;
+
+git diff: mostra quais arquvos estão diferentes com o repositório (alterações);
+
+git log: histórico de todos os commits realizados nesse repositório;
+git log --oneline: trás o histórico resumido em uma linha;
+git help log: outros parâmetros;
+
+q: sair
+
+cat <<arquivo.extensao>>: mostra o que tem dentro dos arquivos;
+
+git reset HEAD~1 --soft: cancela o commit mas devolve o arquivo para a máquina;
+reset: volta commits;
+HEAD~<<variável>>: diz quantos commits eu quero voltar;
+--soft: volta os commits mas os arquivos voltam para a minha máquina para que eu possa altera-los;
+
+git reset HEAD~1 --hard: cancela os commits e elimina os conteúdos;
+
+git tag <<v1.0.0>>: cria um rótulo para o commit como se fosse uma versão estável;
+
+git checkout <<arquivo>>: desfaz o que não foi consolidado naquele arquivo;
+git checkout .: desfaz o que não foi consolidado em todos os arquivos;
+git checkout <<tag>>: desfaz as alterações local até a versão estável que foi criada;
+git checkout master: volta como esta no repositório master;
+git checkout <<hash>> <<arquivo>>: recupera uma versão específica de um arquivo específico;
+
+git rm <<arquivo>>: consolida arquivos excluídos;
+
+git show <<id>>: mostra detalhes de um commit, o que ocorreu naquele commit;
+
+----------------------------------------------------------------------------
+branch: ramificações;
+
+git branch: mostra as branch que tem abertas;
+git checkout -b <<nome da branch>>: parâmetro -b faz criar se for uma nova, sem o parâmetro só navega;
+-d: remove uma branch;
+
+COMMITAR UMA BRANCH NA MASTER:
+
+acessar a branch master:
+git merge <<branch>>: mescla os conteúdos no tempo em que foram feitos 
+Ex: master 1, ||branch1||, master2, ||branch2||
+
+git merge <<branch>> --squash: squash não faz commit, apenas tras as alterações para mim para que eu possa fazer o commit, adiciona os conteúdos da master, depois os conteúdos da branch;
+Ex: master1, master2, master3, ||branchs||
+
+git rebase <<branch>>: pega a ramificação e coloca tudo entre os commits da master. Ex: master1, master2, ||BRANCH||, master3 NUNCA USAR!!!
+
+------------------------------------------------------------------------------
+GIT STASH - stash é esconderijo
+
+Vai esconder tudo o que não foi consolidado na branch, para que eu possa voltar ao master ou outra branch sem ter acabado a atual;
+
+git stash save '<<mensagem>>': esconde e coloca um nome;
+git stash list: vai mostrar todos os stash;
+git stash apply <<id>>: volta um stash passando o id mas mantem uma cópia no stash;
+git stash pop: volta o último stash da pilha e remove ele do stash;
+git stash drop <<id>>: deleta um stash
+git stash show: traz detalhes sobre o stash do topo da pilha;
+git stash clear: deleta todo o stash;
+
+------------------------------------------------------------------------------
+
+REPOSITÓRIOS REMOTOS:
+
+* Configurar a máquina para mandar código para o repositório:
+Para gerar a chave acessar o gitLab > usuário > preferências > chaves SSH > gerar uma nova chave > copiar o comando do rsa > abrir terminal na máquina > rodar o comando substituindo o comentário pelo meu e-mail;
+
+cat ~/.ssh/id_rsa.pub: pegar chave pública
+
+Copia a chave e cola no reposiório > adiciona a chave;
+
+------------------------------
+Colocando projeto no repositório remoto:
+
+git remote add <<nome do repositório remoto a ser criado>> <<endereço do repositório>>
+git remote: mostra todos os repositórios remotos;
+git remote show <<repositório>>: busca do master para ver se tem diferença com o atual 
+git push -U <<repositorio>> --all: envia para o repositório remoto, --all diz que vai enviar todas as branch, -U grava esse comando e da próxima vez é só digitar git push;
+git push -f: forçar envio para o repositório, isso ocorre quando fez um reset no repositório local e o remoto fica com uma versão mais atual do que o local; (precisa acessar as configurações do repositório > repositório > protect branch e desmarcar a proteção (NÃO RECOMENDADO NA MASTER));
+
+git reflog: histório do que aconteceu nos repositório remoto;
+git cherry-pick <<hash>>: desfaz o push forçado; (depois faz um push)
+
+git remote remove <<repositório>>: remove o repositório do remoto;
+
+* Quando alguém atualiza o repositóto você deve atualizar seu local antes de fazer um push;
+
+git pull: baixa os conteúdos do repositóro remoto e mescla com o local;	
+git fetch: baixa os conteúdos do repositório remoto mas não mescla;
+
+git checkout origin/master: navega até a branch baixada para verificar o que esta alterado no master;
+
+volta até o master e mescla manual;
+-----------------------------------------
+
+Removendo tag e removendo do repositório remoto
+
+git tag -d checkpoint
+git push origin :refs/tags/checkpoint
+
+
+
+
